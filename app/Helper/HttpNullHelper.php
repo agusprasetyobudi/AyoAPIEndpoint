@@ -11,4 +11,16 @@ class HttpNullHelper{
         ];
     }
 
+    public function customResponseForSchedule($match_now, $match_comming)
+    {
+        return [
+            'error' => false,
+            'message' => 'Get Match Schedule Success',
+            'data' =>[
+                'match_now' =>$match_now,
+                'match_comming' => $match_comming
+            ]
+        ];
+    }
+
 }

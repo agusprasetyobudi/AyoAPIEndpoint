@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\TeamController;
 use App\Http\Controllers\API\TeamPersonController;
+use App\Http\Controllers\API\MatchScheduleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,17 @@ Route::middleware(['auth:api'])->group(function () {
             Route::post('create', [TeamPersonController::class,'store']);
             Route::post('update/{id}', [TeamPersonController::class,'update']);
             Route::post('delete/{id}', [TeamPersonController::class,'destroy']);
+        });
+    });
+    Route::prefix('match')->group(function () {
+        Route::get('/', [MatchScheduleController::class,'show']);
+        Route::post('create', [MatchScheduleController::class,'store']);
+        Route::post('update/{id}', [MatchScheduleController::class,'update']);
+        Route::post('delete/{id}', [MatchScheduleController::class,'update']);
+        Route::prefix('log')->group(function () {
+            Route::get('/{match}', [MatchScheduleController::class,'viewLogMatch']);
+            Route::post('create', [MatchScheduleController::class,'storeLogMatch']);
+            Route::post('delete/id', [MatchScheduleController::class,'removeLogMatch']);
         });
     });
 });

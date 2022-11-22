@@ -18,4 +18,13 @@ class ScheduleMatch extends Model
         'away_team_id',
         'location',
     ];
+
+    public function HomeTeam()
+    {
+        return $this->hasOne(Team::class,'id','home_team_id');
+    }
+    public function AwayTeam()
+    {
+        return $this->hasOne(Team::class,'id','away_team_id');
+    }
 }

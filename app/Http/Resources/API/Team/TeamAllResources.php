@@ -23,7 +23,7 @@ class TeamAllResources extends JsonResource
             'year_founded' => $this->year_founded,
             'address' => $this->address,
             'city' => $this->city,
-            'team' => AllTeamPersonResource::collection($this->person)
+            'team_person' => AllTeamPersonResource::collection($this->person)
         ];
     }
 }

@@ -22,7 +22,7 @@ class MatchRepotingController extends Controller
             $Schedule = ScheduleMatch::find($request->query('match'));
             $resultHome= $model->where('team_id',$Schedule->home_team_id)->where('schedule_id',$request->query('match'))->count();
             $resultAway= $model->where('team_id',$Schedule->away_team_id)->where('schedule_id',$request->query('match'))->count();
-            $resultMaxGoal= $model->where('schedule_id',$request->query('match'))->groupBy('person_id')->first();
+            $resultMaxGoal= $model->select(\DB::raw('count(person_id)as goal'),'person_id','person_name','schedule_id','name')->where('schedule_id',$request->query('match'))->groupBy('person_id')->orderBy('goal','DESC')->first();
             // dd($resultMaxGoal);
             $finalResult = '';
             if($resultAway == $resultHome){
@@ -43,9 +43,9 @@ class MatchRepotingController extends Controller
                     'away' =>$resultAway,
                 ],
                 'goal_max_person'=>[
-                    // 'person'=>,
-                    // 'goal' =>,
-                    // 'team' =>,
+                    'person'=>$resultMaxGoal->person_name,
+                    'goal' =>$resultMaxGoal->goal,
+                    'team' =>$resultMaxGoal->name,
                 ],
                 'result_match' =>$finalResult
             ];

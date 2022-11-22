@@ -99,7 +99,11 @@ class MatchScheduleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if($model = ScheduleMatch::find($id)){
+            $model->delete();
+            return response()->json(new FindOrUpdateMatchScheduleResource("Schedule Match has deleted",$model),200);
+        }
+        return response()->json($this->helper->nullJsonMessage("Schedule Match"), 404);
     }
 
     /**
@@ -125,6 +129,7 @@ class MatchScheduleController extends Controller
     {
         try {
             $model = ScheduleMatchLog::create($request->all());
+
             // $model = ScheduleMatchLog::find($model->id);
             return response()->json(new FindOrCreateMatchLogResource('Goal log has created',$model), 200);
         } catch (\Throwable $th) {

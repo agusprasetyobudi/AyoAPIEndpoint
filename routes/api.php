@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\MatchRepotingController;
 use App\Http\Controllers\API\TeamController;
 use App\Http\Controllers\API\TeamPersonController;
 use App\Http\Controllers\API\MatchScheduleController;
@@ -28,6 +29,7 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::middleware(['auth:api'])->group(function () {
+    Route::post('auth/logout', [AuthController::class,'Logout']);
     Route::prefix('teams')->group(function () {
         Route::get('/', [TeamController::class,'show']);
         Route::post('create', [TeamController::class,'store']);
@@ -49,6 +51,9 @@ Route::middleware(['auth:api'])->group(function () {
             Route::get('/{match}', [MatchScheduleController::class,'viewLogMatch']);
             Route::post('create', [MatchScheduleController::class,'storeLogMatch']);
             Route::post('delete/{id}', [MatchScheduleController::class,'removeLogMatch']);
+        });
+        Route::prefix('report')->group(function () {
+            Route::get('match-result', [MatchRepotingController::class,'index']);
         });
     });
 });

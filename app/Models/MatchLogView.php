@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class MatchLogView extends Model
 {
     use HasFactory;
+    protected $table = 'view_history_matches';
 }

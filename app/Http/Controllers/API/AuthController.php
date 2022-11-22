@@ -8,6 +8,7 @@ use App\Http\Requests\LogoutResource;
 use App\Http\Resources\API\Auth\LoginResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Passport\TokenRepository;
 
 class AuthController extends Controller
 {
@@ -26,9 +27,14 @@ class AuthController extends Controller
     public function Logout(Request $request)
     {
         try {
-            return response()->json(new LogoutResource($request->user()));
+            // $tokenRepository = app(TokenRepository::class);
+            // $tokenRepository->revokeAccessToken($tokenId);
+            Auth::user()->token()->revoke();
+            return response()->json(['error'=>false,
+                                    'message'=>'You Logged out from system',
+                                    'data'=>null]);
         } catch (\Throwable $th) {
-            //throw $th;
+            throw $th;
         }
     }
 }

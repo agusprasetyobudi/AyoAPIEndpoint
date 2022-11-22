@@ -10,4 +10,15 @@ class ScheduleMatchLog extends Model
 {
     use SoftDeletes;
     use HasFactory;
+
+    protected $fillable = [
+        'match_id',
+        'person_id',
+        'time_goal' ,
+    ];
+
+    public function person()
+    {
+        return $this->hasOne(TeamPerson::class,'id','person_id');
+    }
 }

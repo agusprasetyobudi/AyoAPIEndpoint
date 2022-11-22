@@ -48,7 +48,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::prefix('log')->group(function () {
             Route::get('/{match}', [MatchScheduleController::class,'viewLogMatch']);
             Route::post('create', [MatchScheduleController::class,'storeLogMatch']);
-            Route::post('delete/id', [MatchScheduleController::class,'removeLogMatch']);
+            Route::post('delete/{id}', [MatchScheduleController::class,'removeLogMatch']);
         });
     });
 });

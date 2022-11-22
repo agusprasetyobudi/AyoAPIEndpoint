@@ -6,9 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\ScheduleMatch;
 use App\Helper\HttpNullHelper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\MatchLog\CreateMatchLogRequest;
 use App\Http\Requests\API\MatchSchedule\CreateMatchScheduleRequest;
 use App\Http\Resources\API\MatchSchedule\FindOrUpdateMatchScheduleResource;
 use App\Http\Resources\API\MatchSchedule\GetMatchScheduleResource;
+use App\Http\Resources\API\MatchScheduleLog\FindOrCreateMatchLogResource;
+use App\Http\Resources\API\MatchScheduleLog\GetScheduleLogResource;
+use App\Http\Resources\API\MatchScheduleLog\MatchScheduleLogResource;
+use App\Models\ScheduleMatchLog;
 
 class MatchScheduleController extends Controller
 {
@@ -105,7 +110,10 @@ class MatchScheduleController extends Controller
      */
     public function viewLogMatch(Request $request,$id)
     {
-        # code...
+        if($model = ScheduleMatchLog::where('match_id',$id)->get()){
+            return response()->json(new GetScheduleLogResource("Get Goal Log By Match ",$model),200);
+        }
+        return response()->json($this->helper->nullJsonMessage("Goal Log"),404);
     }
     /**
      * Store a newly created log resource in storage.
@@ -113,9 +121,15 @@ class MatchScheduleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function storeLogMatch(Request $request)
+    public function storeLogMatch(CreateMatchLogRequest $request)
     {
-        # code...
+        try {
+            $model = ScheduleMatchLog::create($request->all());
+            // $model = ScheduleMatchLog::find($model->id);
+            return response()->json(new FindOrCreateMatchLogResource('Goal log has created',$model), 200);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**
@@ -124,8 +138,13 @@ class MatchScheduleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function removeLogMatch(Request $request)
+    public function removeLogMatch($id)
     {
-        # code...
+        if($model = ScheduleMatchLog::find($id)){
+            $model->delete();
+            return response()->json(new FindOrCreateMatchLogResource("Goal Log has deleted",$model),200);
+        }
+        return response()->json($this->helper->nullJsonMessage("Goal Log"), 404);
+
     }
 }

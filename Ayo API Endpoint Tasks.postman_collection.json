@@ -93,16 +93,19 @@
 										{
 											"key": "name-person",
 											"value": "aji",
+											"description": "find by name",
 											"disabled": true
 										},
 										{
 											"key": "find",
 											"value": "1",
+											"description": "find by id person",
 											"disabled": true
 										},
 										{
 											"key": "teams",
-											"value": "1"
+											"value": "1",
+											"description": "find by id team"
 										}
 									]
 								}
@@ -262,11 +265,13 @@
 								{
 									"key": "find",
 									"value": "3",
+									"description": "find By id",
 									"disabled": true
 								},
 								{
 									"key": "team-name",
 									"value": "Tim Bala Balas",
+									"description": "find by name",
 									"disabled": true
 								}
 							]
@@ -584,7 +589,8 @@
 									"query": [
 										{
 											"key": "match",
-											"value": "1"
+											"value": "1",
+											"description": "Find Match By ID"
 										}
 									]
 								}
@@ -742,16 +748,19 @@
 								{
 									"key": "match-location",
 									"value": "tanggerang",
+									"description": "get match sort by location",
 									"disabled": true
 								},
 								{
 									"key": "match-date",
 									"value": "2022-11-22",
+									"description": "get match sort by date",
 									"disabled": true
 								},
 								{
 									"key": "find",
-									"value": "1"
+									"value": "1",
+									"description": "get match by id"
 								}
 							]
 						}
@@ -759,7 +768,7 @@
 					"response": []
 				},
 				{
-					"name": "Get Match Copy",
+					"name": "Delete Match",
 					"request": {
 						"auth": {
 							"type": "bearer",
